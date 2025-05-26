@@ -38,45 +38,58 @@ export default function LoginPage() {
   }, [user]);
 
   return (
-    <div className=" bg-gradient-to-r from-[rgb(165,142,255)] to-[#FF7AC2] min-h-screen flex justify-center items-center">
-      <div className="flex bg-[#BE76CF] shadow-[#a968b8]
-      drop-shadow-xl  flex-col items-center justify-center  py-16 px-16 rounded-lg">
-        <div className="">
-          <h1 className="text-[2.5rem] font-bold relative bottom-3">{loading ? "Processing" : "Login"}</h1>
-        </div>
-        <hr />
-        <div>
-          <div className=" flex flex-col">
-            <label htmlFor="email">email</label>
+    <div className="bg-gradient-to-br from-[#A58EFF] via-[#FF7AC2] to-[#BE76CF] min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center py-14 px-10 sm:px-16 rounded-3xl shadow-2xl bg-white/80 dark:bg-black/60 border border-[#BE76CF]/20 backdrop-blur-lg transition-all duration-300 max-w-md w-full">
+        <h1 className="text-4xl font-extrabold text-[#BE76CF] mb-2 drop-shadow-lg tracking-wide text-center">
+          {loading ? "Processing..." : "Login"}
+        </h1>
+        <hr className="w-16 border-[#BE76CF]/40 mb-8" />
+        <div className="w-full">
+          <div className="flex flex-col mb-4">
+            <label htmlFor="email" className="mb-1 font-semibold text-[#BE76CF]">
+              Email
+            </label>
             <input
-              className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+              className="px-4 py-3 rounded-xl border border-[#BE76CF]/30 shadow focus:outline-none focus:ring-2 focus:ring-[#BE76CF] text-lg text-black dark:bg-black/30 dark:text-white transition-all duration-200"
               id="email"
               type="text"
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
-              placeholder="email"
+              placeholder="Enter your email"
+              autoComplete="email"
             />
           </div>
-          <div className=" flex flex-col">
-            <label htmlFor="password">password</label>
+          <div className="flex flex-col mb-6">
+            <label htmlFor="password" className="mb-1 font-semibold text-[#BE76CF]">
+              Password
+            </label>
             <input
-              className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+              className="px-4 py-3 rounded-xl border border-[#BE76CF]/30 shadow focus:outline-none focus:ring-2 focus:ring-[#BE76CF] text-lg text-black dark:bg-black/30 dark:text-white transition-all duration-200"
               id="password"
               type="password"
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
-              placeholder="password"
+              placeholder="Enter your password"
+              autoComplete="current-password"
             />
           </div>
-        </div>
-        <div className="flex flex-col">
           <button
             onClick={onLogin}
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 relative top-3"
+            disabled={buttonDisabled || loading}
+            className={`w-full py-3 rounded-xl bg-gradient-to-r from-[#BE76CF] to-[#FF7AC2] text-white font-bold text-lg shadow-lg hover:scale-105 hover:from-[#A58EFF] hover:to-[#BE76CF] transition-all duration-200 border border-[#BE76CF]/30 mb-4 ${
+              buttonDisabled || loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
           >
-            Login here
+            {loading ? "Logging in..." : "Login"}
           </button>
-          <Link href="/signup">Visit Signup page</Link>
+          <div className="text-center">
+            <Link
+              href="/signup"
+              className="text-[#BE76CF] hover:underline font-semibold"
+            >
+              Visit Signup page
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect } from "react";
 import { TypeExContext } from "@/context/context";
 import { useRouter } from "next/navigation";
@@ -47,23 +46,26 @@ function Home({}: Props) {
 
   if (createRoom == false && joinRoom == false)
     return (
-      <main className="bg-gradient-to-r from-[rgb(165,142,255)] to-[#FF7AC2] h-screen flex flex-col justify-center items-center">
-        <div className="flex gap-8">
-          <div
-            onClick={cr}
-            className="bg-[#BE76CF]
-     min-h-[25rem] min-w-[20rem] flex justify-center items-center   border-2 rounded-xl border-[#CF94DD] hover:border-white"
-          >
-            <p>create room</p>
-          </div>
-          <div
-            onClick={jr}
-            className="bg-[#BE76CF]
-     min-h-[25rem] min-w-[20rem] flex justify-center shadow-md items-center
-     border-2 rounded-xl border-[#CF94DD] hover:border-white
-     "
-          >
-            <p>join room</p>
+      <main className="bg-gradient-to-r from-[rgb(165,142,255)] to-[#FF7AC2] min-h-screen flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center gap-8">
+          <h1 className="text-4xl font-extrabold text-white drop-shadow-lg mb-8 tracking-wide">
+            Welcome to MovieSync
+          </h1>
+          <div className="flex gap-10 flex-wrap">
+            <div
+              onClick={cr}
+              className="group bg-white/30 dark:bg-black/30 min-h-[22rem] min-w-[18rem] flex flex-col justify-center items-center border-2 rounded-2xl border-[#CF94DD] hover:border-white shadow-2xl hover:shadow-[0_8px_32px_0_rgba(190,118,207,0.25),0_1.5px_8px_0_rgba(255,122,194,0.10)] cursor-pointer transition-all duration-300 backdrop-blur-lg transform hover:-translate-y-2"
+            >
+              <span className="text-6xl mb-4 drop-shadow-lg text-[#BE76CF] group-hover:scale-110 transition-transform duration-200">🎬</span>
+              <p className="text-2xl font-bold text-[#BE76CF] group-hover:text-white transition-colors duration-200">Create Room</p>
+            </div>
+            <div
+              onClick={jr}
+              className="group bg-white/30 dark:bg-black/30 min-h-[22rem] min-w-[18rem] flex flex-col justify-center items-center border-2 rounded-2xl border-[#CF94DD] hover:border-white shadow-2xl hover:shadow-[0_8px_32px_0_rgba(190,118,207,0.25),0_1.5px_8px_0_rgba(255,122,194,0.10)] cursor-pointer transition-all duration-300 backdrop-blur-lg transform hover:-translate-y-2"
+            >
+              <span className="text-6xl mb-4 drop-shadow-lg text-[#BE76CF] group-hover:scale-110 transition-transform duration-200">👥</span>
+              <p className="text-2xl font-bold text-[#BE76CF] group-hover:text-white transition-colors duration-200">Join Room</p>
+            </div>
           </div>
         </div>
       </main>

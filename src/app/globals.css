@@ -24,10 +24,43 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Add a subtle box-shadow utility for cards or modals */
+.shadow-soft {
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.08);
+}
+
+/* Add a border color utility that matches your theme */
+.border-theme {
+  border: 1px solid rgba(var(--foreground-rgb), 0.15);
+}
+
+/* Spinner utility for loading states */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 4px solid #e3e3e3;
+  border-top: 4px solid #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Button focus for accessibility */
+button:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
 }

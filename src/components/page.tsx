@@ -1,8 +1,9 @@
 "use client"
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import style from "./chat.module.css";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { TypeExContext } from "@/context/context"; // <-- Add this import
 interface IMsgDataTypes {
   roomId: string | number;
   user: string;
@@ -16,6 +17,7 @@ const ChatPage = ({ socket, username, roomId }: any) => {
   const [user, setUser] = useState({
     username: null,
   });
+  const { setCreateRoom, setJoinRoom } = useContext(TypeExContext); // <-- Add this line
 
   const details = async () => {
     try{
@@ -209,11 +211,11 @@ const ChatPage = ({ socket, username, roomId }: any) => {
       const res = await axios.post("api/users/leaveRoom", roomId);
       console.log(res);
       localStorage.clear();
-    
+      setCreateRoom(false); // Reset context state
+      setJoinRoom(false);   // Reset context state
     } catch (error) {
       alert(error);
-    }
-    finally{
+    } finally {
       router.push("/");
     }
   };
@@ -234,20 +236,19 @@ const ChatPage = ({ socket, username, roomId }: any) => {
 
   return (
     <div
-      className={`${style.chat_div} bg-gradient-to-r from-[rgb(165,142,255)] to-[#FF7AC2] min-h-fit w-[80vw] flex justify-center items-center`}
+      className={`${style.chat_div} bg-gradient-to-r from-[rgb(165,142,255)] to-[#FF7AC2] min-h-fit w-full flex justify-center items-center py-8`}
     >
-      <div className="max-w-screen mx-auto shadow-lg rounded-md max-h-[70vh] ">
-        <div className="flex items-center justify-center aspect-w-16 aspect-h-9">
+      <div className="w-full max-w-3xl mx-auto shadow-soft rounded-xl bg-white/80 dark:bg-black/60 p-6">
+        <div className="flex items-center justify-center aspect-w-16 aspect-h-9 relative">
           {selectedVideo && (
             <video
               ref={videoRef}
-              className="object-cover w-[70%] h-[60%] absolute "
+              className="object-contain w-full max-h-[50vh] rounded-lg border-theme bg-black"
               controls
             >
               {selectedVideo && (
                 <source
                   src={URL.createObjectURL(selectedVideo)}
-                  className="w-[80vw] "
                   type="video/mp4"
                 />
               )}
@@ -255,58 +256,58 @@ const ChatPage = ({ socket, username, roomId }: any) => {
             </video>
           )}
         </div>
-        <div className="mt-4" style={{ display: video ? "none" : "" }}>
+        <div className="mt-6 flex justify-center" style={{ display: video ? "none" : "" }}>
           <input
             type="file"
             accept="video/*"
             onChange={handleVideoChange}
-            className="py-2 px-4 border rounded-md"
+            className="py-2 px-4 border-theme rounded-lg shadow-sm bg-white/90 dark:bg-black/40 text-sm"
           />
         </div>
         <div>
-          <div className="flex items-center justify-center mt-4 space-x-4 relative sm:top-[32vw]  lg:top-[16vw]">
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
             <button
               onClick={handlePlay}
-              className="px-4 py-2 text-white bg-blue-500 rounded-md"
+              className="px-5 py-2 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow transition"
             >
-              Play
+              ▶ Play
             </button>
             <button
               onClick={handlePause}
-              className="px-4 py-2 text-white bg-blue-500 rounded-md"
+              className="px-5 py-2 font-semibold text-white bg-blue-400 hover:bg-blue-500 rounded-lg shadow transition"
             >
-              Pause
+              ❚❚ Pause
             </button>
             <button
               onClick={handleIncreaseTime}
-              className="px-4 py-2 text-white bg-green-500 rounded-md"
+              className="px-5 py-2 font-semibold text-white bg-green-500 hover:bg-green-600 rounded-lg shadow transition"
             >
               +10s
             </button>
             <button
               onClick={handleDecreaseTime}
-              className="px-4 py-2 text-white bg-red-500 rounded-md"
+              className="px-5 py-2 font-semibold text-white bg-red-500 hover:bg-red-600 rounded-lg shadow transition"
             >
               -10s
             </button>
             <button
               onClick={() => handleSync(videoRef.current?.currentTime)}
-              className="px-4 py-2 text-white bg-purple-500 rounded-md"
+              className="px-5 py-2 font-semibold text-white bg-purple-500 hover:bg-purple-600 rounded-lg shadow transition"
             >
-              Sync
+              ⟳ Sync
             </button>
           </div>
-          <div className="flex items-center justify-center mt-4 space-x-4 relative sm:top-[32vw]  lg:top-[16vw]">
+          <div className="flex items-center justify-center mt-6">
             <button
               onClick={exit}
-              className="px-4  py-2 text-white bg-red-600 rounded-md"
+              className="px-6 py-2 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow transition"
             >
-              Leave
+              Leave Room
             </button>
           </div>
-          <div className="fixed bottom-0 right-0">
-            <p> RoomId: {roomId}</p>
-            <p> UserName: {user.username}</p>
+          <div className="fixed bottom-4 right-4 bg-white/80 dark:bg-black/60 rounded-lg px-4 py-2 shadow-soft text-sm border-theme">
+            <p className="font-semibold">Room ID: <span className="font-normal">{roomId}</span></p>
+            <p className="font-semibold">User: <span className="font-normal">{user.username}</span></p>
           </div>
         </div>
       </div>
