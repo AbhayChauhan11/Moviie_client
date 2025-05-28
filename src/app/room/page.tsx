@@ -8,8 +8,6 @@ import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-// Importing avatar component from heroicons
-import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
@@ -185,15 +183,8 @@ export default function Home() {
           {/* User profile section */}
           <div 
             onClick={getUserDetails}
-            className="flex items-center gap-2 cursor-pointer bg-white/50 dark:bg-black/30 px-3 py-1.5 rounded-full hover:bg-white/80 dark:hover:bg-black/50 transition-all duration-200 border border-[#BE76CF]/30"
+            className="cursor-pointer bg-white/50 dark:bg-black/30 px-4 py-2 rounded-xl hover:bg-white/80 dark:hover:bg-black/50 transition-all duration-200 border border-[#BE76CF]/30"
           >
-            {avatarError ? (
-              <UserCircleIcon className="h-8 w-8 text-[#BE76CF]" />
-            ) : (
-              <div className="relative h-8 w-8">
-                <UserCircleIcon className="h-8 w-8 text-[#BE76CF]" />
-              </div>
-            )}
             <span className="font-medium text-[#BE76CF]">{userName || "User"}</span>
           </div>
           
